@@ -16,7 +16,7 @@ export function isCacheEnabled(): boolean {
 }
 
 export function getCacheTarget(): string {
-	return core.getInput('cache-target') || 'debug';
+	return core.getInput('cache-target') || '';
 }
 
 export function getTargetPaths(): string[] {
