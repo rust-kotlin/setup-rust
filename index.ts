@@ -1,10 +1,10 @@
-import fs from 'node:fs';
-import os from 'node:os';
-import path from 'node:path';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as io from '@actions/io';
 import * as tc from '@actions/tool-cache';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { CARGO_HOME } from './src/cache';
 import { installBins, restoreCache } from './src/cargo';
 import { installToolchain } from './src/rust';
@@ -12,6 +12,7 @@ import { installToolchain } from './src/rust';
 export async function installRustup() {
 	try {
 		await io.which('rustup', true);
+        core.info('rustup already exists, skipping installation');
 		return;
 	} catch {
 		// Doesn't exist
@@ -45,13 +46,20 @@ async function run() {
 	core.addPath(path.join(CARGO_HOME, 'bin'));
 
 	try {
-		await installRustup();
-		await installToolchain();
-		await installBins();
-
 		// Restore cache after the toolchain has been installed,
 		// as we use the rust version and commit hashes in the cache key!
 		await restoreCache();
+		await installRustup();
+        try {
+            await io.which('cargo', true);
+            await io.which('rustc', true);
+            await io.which('cargo-binstall', true);
+            core.info('toolchain already exist, skipping installation');
+        } catch {
+            // Doesn't exist
+            await installToolchain();
+            await installBins();
+        }
 	} catch (error: unknown) {
 		core.setFailed((error as Error).message);
 
