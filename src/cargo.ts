@@ -1,19 +1,19 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { family } from 'detect-libc';
 import * as cache from '@actions/cache';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as glob from '@actions/glob';
 import * as tc from '@actions/tool-cache';
+import { family } from 'detect-libc';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
-	CARGO_HOME,
-	getCachePaths,
-	getCachePrefixes,
-	getCacheTarget,
-	getPrimaryCacheKey,
-	isCacheEnabled,
-	WORKSPACE_ROOT,
+    CARGO_HOME,
+    getCachePaths,
+    getCachePrefixes,
+    getCacheTarget,
+    getPrimaryCacheKey,
+    isCacheEnabled,
+    WORKSPACE_ROOT,
 } from './cache';
 import { rmrf } from './fs';
 
@@ -184,8 +184,8 @@ export async function saveCache() {
 		return;
 	}
 
-	await cleanCargoRegistry();
-	await cleanTargetProfile();
+	// await cleanCargoRegistry();
+	// await cleanTargetProfile();
 
 	core.info(`Saving cache with key ${primaryKey}`);
 
