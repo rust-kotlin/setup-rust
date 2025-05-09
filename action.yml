@@ -14,7 +14,7 @@ inputs:
       'Base branch/ref to save a warmup cache on. Other branches/refs will restore from this base.'
   cache-target:
     description: 'Name of the target profile to cache.'
-    default: 'debug'
+    default: ''
   channel:
     description: 'Toolchain specification/channel to explicitly install.'
   components:
