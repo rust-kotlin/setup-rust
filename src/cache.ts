@@ -30,6 +30,8 @@ export function getTargetPaths(): string[] {
 
 export function getCachePaths(): string[] {
 	return [
+		// ~/.cargo/bin
+		path.join(CARGO_HOME, 'bin'), 
 		// ~/.cargo/registry
 		path.join(CARGO_HOME, 'registry'),
 		// /workspace/target/debug
