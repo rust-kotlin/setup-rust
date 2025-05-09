@@ -7,6 +7,7 @@ import * as glob from '@actions/glob';
 import { RUST_HASH, RUST_VERSION } from './rust';
 
 export const CARGO_HOME = process.env.CARGO_HOME ?? path.join(os.homedir(), '.cargo');
+export const RUSTUP_HOME = process.env.RUSTUP_HOME ?? path.join(os.homedir(), '.rustup');
 
 export const WORKSPACE_ROOT = process.env.GITHUB_WORKSPACE ?? process.cwd();
 
@@ -31,9 +32,11 @@ export function getTargetPaths(): string[] {
 export function getCachePaths(): string[] {
 	return [
 		// ~/.cargo/bin
-		path.join(CARGO_HOME, 'bin'), 
+		path.join(CARGO_HOME, 'bin'),
 		// ~/.cargo/registry
 		path.join(CARGO_HOME, 'registry'),
+		// ~/.rustup
+		RUSTUP_HOME,
 		// /workspace/target/debug
 		...getTargetPaths(),
 	];
